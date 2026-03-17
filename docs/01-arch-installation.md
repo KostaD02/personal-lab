@@ -256,16 +256,16 @@ Just input whatever you want, in my case I entered: `personal-lab`.
 > [!NOTE]
 > The following core packages are required for the server's infrastructure and management: `docker`, `docker-compose` and `openssh`. Others are optional.
 
-| Package                                                    | Purpose                                                                                  |
-| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| [openssh](https://www.openssh.org/portable.html)           | Secure Shell (SSH) server for remote access.                                             |
-| [docker](https://www.docker.com/)                          | Containerization engine for self-hosted services.                                        |
-| [docker-compose](https://www.docker.com/)                  | Tool for defining and running multi-container Docker applications.                       |
-| [git](https://git-scm.com/)                                | Distributed version control system for project management.                               |
-| [vim](https://www.vim.org/)                                | Advanced text editor for system configuration.; Or you can go with `nano` if you prefer. |
-| [btop](https://github.com/aristocratos/btop)               | Resource monitor showing detailed CPU, memory, and network usage.                        |
-| [ufw](https://www.openssh.org/portable.html)               | Uncomplicated Firewall for managing network security.                                    |
-| [bash-completion](https://github.com/scop/bash-completion) | Programmable completion for Bash command line.                                           |
+| Package                                                    | Purpose                                                                                                  |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| [openssh](https://www.openssh.org/portable.html)           | Secure Shell (SSH) server for remote access.                                                             |
+| [docker](https://www.docker.com/)                          | Containerization engine for self-hosted services.                                                        |
+| [docker-compose](https://www.docker.com/)                  | Tool for defining and running multi-container Docker applications.                                       |
+| [git](https://git-scm.com/)                                | Distributed version control system for project management.                                               |
+| [neovim](https://neovim.io/)                               | Hyperextensible Vim-based text editor for system configuration; Or you can go with `nano` if you prefer. |
+| [btop](https://github.com/aristocratos/btop)               | Resource monitor showing detailed CPU, memory, and network usage.                                        |
+| [ufw](https://www.openssh.org/portable.html)               | Uncomplicated Firewall for managing network security.                                                    |
+| [bash-completion](https://github.com/scop/bash-completion) | Programmable completion for Bash command line.                                                           |
 
 #### 14. Timezone
 
@@ -388,6 +388,9 @@ sudo nmcli con mod "<CONNECTION_NAME>" ipv4.gateway 192.168.1.1
 sudo nmcli con mod "<CONNECTION_NAME>" ipv4.dns "1.1.1.1,8.8.8.8"
 sudo nmcli con mod "<CONNECTION_NAME>" ipv4.method manual
 ```
+
+> [!WARNING]
+> Keep in mind that you should reserve this IP address in your router settings to avoid IP conflicts.
 
 ### Apply new address
 
