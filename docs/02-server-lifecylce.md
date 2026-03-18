@@ -4,6 +4,9 @@ This guide covers how to configure the server to ensure it remains operational 2
 It includes hardware-level power recovery, kernel-level stability via GRUB,
 and the suppression of OS-level sleep and hibernation triggers to maintain a persistent connection at `192.168.1.22`.
 
+> [!IMPORTANT]
+> **Optional Stability:** If you do not require 24/7 uptime or if your server is a temporary workstation that you prefer to put to sleep manually, you can skip this guide. However, skipping these steps may result in SSH disconnects and unexpected shutdowns.
+
 - [BIOS Configuration: The "Stay Alive" Foundation](#bios-configuration-the-stay-alive-foundation)
   - [How to enter BIOS](#how-to-enter-bios)
   - [BIOS Settings](#bios-settings)
@@ -177,3 +180,5 @@ By completing these steps, the server is transitioned from a "desktop-first" ene
 - **Network Layer**: Disabling Wi-Fi power management ensures the `192.168.1.22` address remains responsive and low-latency, preventing SSH timeouts.
 
 The system is now a reliable, 24/7 "Immortal" node ready to host the educata and MirrorTab stacks.
+
+Have fun!
