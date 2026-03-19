@@ -1,0 +1,17 @@
+services:
+  homarr:
+    container_name: homarr
+    image: ghcr.io/homarr-labs/homarr:latest
+    restart: unless-stopped
+    volumes:
+      - /mnt/data/docker/volumes/homarr:/appdata
+    environment:
+      - SECRET_ENCRYPTION_KEY=ceef22674baa68544d8b3493131c6ff0b77d1d84941d5cbe677d8e51e745f440
+    ports:
+      - "7575:7575"
+    networks:
+      - proxy-nw
+
+networks:
+  proxy-nw:
+    external: true

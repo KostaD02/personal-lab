@@ -79,19 +79,15 @@ Maintaining a consistent directory structure is vital for long-term management. 
 ├── feeds/
 │   └── tt-rss/
 │       └── docker-compose.yml
-├── vault/
-│   └── memos/
+├── utility/
+│   └── microbin/
 │       └── docker-compose.yml
 ├── workspace/
 │   └── excalidraw/
 │       └── docker-compose.yml
-├── tools/
-│   ├── it-tools/
-│   │   └── docker-compose.yml
-│   └── microbin/
-│       └── docker-compose.yml
-└── network/
-    └── docker-compose.yml
+└── tools/
+    └── it-tools/
+        └── docker-compose.yml
 ```
 
 > [!NOTE]
@@ -105,7 +101,7 @@ To allow containers in different categories to communicate, specifically for a r
 docker network create proxy-nw
 ```
 
-In subsequent `docker-compose.yml` files, this network is referenced as an external entity to ensure connectivity across stacks:
+In subsequent `docker-compose.yml` **files**, this network is referenced as an external entity to ensure connectivity across stacks:
 
 ```yaml
 networks:
