@@ -7,6 +7,12 @@ Since we are using **Docker Compose** on our **192.168.1.22** node,
 we require a setup that is reproducible,
 organized, and prevents logs from consuming the entire root partition.
 
+- [Installation: Docker Engine \& Compose](#installation-docker-engine--compose)
+- [Daemon Optimization](#daemon-optimization)
+- [Standardized Directory Structure](#standardized-directory-structure)
+- [Shared Network Infrastructure](#shared-network-infrastructure)
+- [Summary](#summary)
+
 ## Installation: Docker Engine & Compose
 
 In [01-arch-installation.md](/docs/01-arch-installation.md), we installed Docker Engine and Docker Compose but if you missed installing them, here is the command:
