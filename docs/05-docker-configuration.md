@@ -76,9 +76,6 @@ Maintaining a consistent directory structure is vital for long-term management. 
 ├── media/
 │   └── immich/
 │       └── docker-compose.yml
-├── feeds/
-│   └── tt-rss/
-│       └── docker-compose.yml
 ├── utility/
 │   └── microbin/
 │       └── docker-compose.yml

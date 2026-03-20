@@ -1,0 +1,19 @@
+services:
+  stirling-pdf:
+    image: stirlingtools/stirling-pdf:latest
+    container_name: stirling-pdf
+    ports:
+      - "8089:8080"
+    volumes:
+      - /mnt/data/docker/volumes/stirling-pdf/configs:/configs
+      - /mnt/data/docker/volumes/stirling-pdf/customFiles:/customFiles
+    environment:
+      - DOCKER_ENABLE_SECURITY=false
+      - TZ=Asia/Tbilisi
+    networks:
+      - proxy-nw
+    restart: unless-stopped
+
+networks:
+  proxy-nw:
+    external: true

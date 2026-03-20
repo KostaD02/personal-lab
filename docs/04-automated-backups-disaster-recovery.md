@@ -69,6 +69,8 @@ DEST="/mnt/data/backups/weekly/$DATE"
 LOG="/home/kostad/scripts/backup.log"
 
 TARGETS=(
+    "/mnt/data/docker/volumes"
+    "/opt/stacks"
     "/home/kostad/data"
     "/etc/nginx"
     "/etc/fstab"
