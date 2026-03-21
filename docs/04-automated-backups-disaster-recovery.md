@@ -72,6 +72,7 @@ TARGETS=(
     "/mnt/data/docker/volumes"
     "/opt/stacks"
     "/home/kostad/data"
+    "/home/kostad/certs"
     "/etc/nginx"
     "/etc/fstab"
 )

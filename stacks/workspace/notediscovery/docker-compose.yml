@@ -1,0 +1,17 @@
+services:
+  notediscovery:
+    image: ghcr.io/gamosoft/notediscovery:latest
+    container_name: notediscovery
+    restart: unless-stopped
+    networks:
+      - proxy-nw
+    ports:
+      - "8085:8000"
+    volumes:
+      - /mnt/data/docker/volumes/notediscovery/data:/app/data
+    environment:
+      - TZ=Asia/Tbilisi
+
+networks:
+  proxy-nw:
+    external: true

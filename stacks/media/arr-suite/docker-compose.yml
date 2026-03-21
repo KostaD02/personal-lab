@@ -1,0 +1,79 @@
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tbilisi
+    volumes:
+      - /mnt/data/docker/volumes/prowlarr/config:/config
+    ports:
+      - 9696:9696
+    networks:
+      - proxy-nw
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tbilisi
+    volumes:
+      - /mnt/data/docker/volumes/sonarr/config:/config
+      - /mnt/data/media:/data
+    ports:
+      - 8989:8989
+    networks:
+      - proxy-nw
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tbilisi
+    volumes:
+      - /mnt/data/docker/volumes/radarr/config:/config
+      - /mnt/data/media:/data
+    ports:
+      - 7878:7878
+    networks:
+      - proxy-nw
+    restart: unless-stopped
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=info
+      - TZ=Asia/Tbilisi
+    networks:
+      - proxy-nw
+    restart: unless-stopped
+
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tbilisi
+    volumes:
+      - /mnt/data/docker/volumes/jellyfin/config:/config
+      - /mnt/data/media:/data
+    ports:
+      - 8096:8096
+    devices:
+      - /dev/dri:/dev/dri # Pass-through for Hardware Acceleration
+    networks:
+      - proxy-nw
+    restart: unless-stopped
+
+networks:
+  proxy-nw:
+    external: true
