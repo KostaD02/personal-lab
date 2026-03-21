@@ -16,10 +16,12 @@ This directory contains the Docker Compose files for the services I use in my pe
 ## Media
 
 - [Immich](media/immich/docker-compose.yml)
+- [Arr Suite](media/arr-suite/docker-compose.yml)
 
 ## Workspace
 
 - [Excalidraw](workspace/excalidraw/docker-compose.yml)
+- [NoteDiscovery](workspace/notediscovery/docker-compose.yml)
 
 ## Utility
 
