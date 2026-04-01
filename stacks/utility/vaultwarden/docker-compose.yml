@@ -1,0 +1,20 @@
+services:
+  vaultwarden:
+    container_name: vaultwarden
+    image: vaultwarden/server:latest
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - TZ=Asia/Tbilisi
+      - SIGNUPS_ALLOWED=true # Set to false AFTER you create your account
+      - DOMAIN=https://YOUR_DOMAIN
+      - DATABASE_URL=/data/vaultwarden.db
+    volumes:
+      - /mnt/data/docker/volumes/vaultwarden:/data
+    networks:
+      - proxy-nw
+
+networks:
+  proxy-nw:
+    external: true

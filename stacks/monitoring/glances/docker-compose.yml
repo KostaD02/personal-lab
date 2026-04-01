@@ -1,0 +1,18 @@
+services:
+  glances:
+    image: nicolargo/glances:latest-full
+    container_name: glances
+    restart: always
+    pid: "host"
+    network_mode: "host"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/etc/os-release:/etc/os-release:ro"
+      - "/mnt/data/docker/volumes/glances/glances.conf:/glances/conf/glances.conf"
+      - "/:/rootfs:ro"
+    environment:
+      - GLANCES_OPT=-w
+      - TZ=Asia/Tbilisi
+      - PYTHONPYCACHEPREFIX=/tmp/py_caches
+    tmpfs:
+      - /tmp

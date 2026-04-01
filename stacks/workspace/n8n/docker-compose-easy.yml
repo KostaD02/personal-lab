@@ -1,0 +1,22 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    environment:
+      - N8N_HOST=192.168.1.22
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - TZ=Asia/Tbilisi
+      - WEBHOOK_URL=http://192.168.1.22:5678/
+    volumes:
+      - /mnt/data/docker/volumes/n8n/data:/home/node/.n8n
+      - /opt/stacks:/opt/stacks:ro
+    ports:
+      - 5678:5678
+    restart: unless-stopped
+    networks:
+      - proxy-nw
+
+networks:
+  proxy-nw:
+    external: true

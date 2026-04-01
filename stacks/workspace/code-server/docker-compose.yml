@@ -1,0 +1,23 @@
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tbilisi
+      - PASSWORD=PUT_YOUR_PASSWORD_HERE
+      - DEFAULT_WORKSPACE=/opt/stacks
+    volumes:
+      - /mnt/data/docker/volumes/code-server/config:/config
+      - /opt/stacks:/opt/stacks
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8443:8443
+    restart: unless-stopped
+    networks:
+      - proxy-nw
+
+networks:
+  proxy-nw:
+    external: true

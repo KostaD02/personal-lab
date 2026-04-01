@@ -1,0 +1,39 @@
+# Master Stack for my personal lab
+# Using 'include' to manage sub-directories while keeping one source of truth.
+
+include:
+  # Dashboard
+  - dashboard/homarr/docker-compose.yml
+
+  # Media
+  - media/immich/docker-compose.yml
+  - media/arr-suite/docker-compose.yml
+
+  # Monitoring
+  - monitoring/glances/docker-compose.yml
+
+  # Tools
+  - tools/it-tools/docker-compose.yml
+
+  # Utility
+  - utility/microbin/docker-compose.yml
+  - utility/vaultwarden/docker-compose.yml
+  - utility/qbittorrent/docker-compose.yml
+  - utility/filebrowser/docker-compose.yml
+  - utility/stirling-pdf/docker-compose.yml
+
+  # Workspace
+  - workspace/n8n/docker-compose.yml
+  - workspace/excalidraw/docker-compose.yml
+  - workspace/code-server/docker-compose.yml
+  - workspace/notediscovery/docker-compose.yml
+
+  # Gaming
+  - gaming/steam-idler/docker-compose.yml
+
+  # Network
+  - network/cloudflare/docker-compose.yml
+
+networks:
+  proxy-nw:
+    external: true

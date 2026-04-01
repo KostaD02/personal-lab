@@ -1,0 +1,5 @@
+tunnel: YOUR_TUNNEL_ID
+ingress:
+  - hostname: YOUR_SERVICE.YOUR_DOMAIN
+    service: http://YOUR_SERVICE:YOUR_PORT
+  - service: http_status:404

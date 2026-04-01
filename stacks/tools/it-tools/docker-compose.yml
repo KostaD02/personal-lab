@@ -1,0 +1,13 @@
+services:
+  it-tools:
+    container_name: it-tools
+    image: ghcr.io/corentinth/it-tools:latest
+    restart: unless-stopped
+    ports:
+      - "4000:80"
+    networks:
+      - proxy-nw
+
+networks:
+  proxy-nw:
+    external: true

@@ -1,0 +1,19 @@
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    container_name: filebrowser
+    user: 1000:1000
+    ports:
+      - "8081:80"
+    volumes:
+      - /opt/stacks:/srv/stacks
+      - /mnt/data:/srv/data
+      - /mnt/data/docker/volumes/filebrowser/filebrowser.db:/database.db
+      - /mnt/data/docker/volumes/filebrowser/settings.json:/config/settings.json
+    networks:
+      - proxy-nw
+    restart: always
+
+networks:
+  proxy-nw:
+    external: true
