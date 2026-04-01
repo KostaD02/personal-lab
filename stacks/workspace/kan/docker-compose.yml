@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: kan-db
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - /mnt/data/docker/volumes/kanbn/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - proxy-nw
+    restart: unless-stopped
+
+  migrate:
+    image: ghcr.io/kanbn/kan-migrate:latest
+    container_name: kan-migrate
+    environment:
+      - POSTGRES_URL=${POSTGRES_URL}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - proxy-nw
+    restart: "no"
+
+  web:
+    image: ghcr.io/kanbn/kan:latest
+    container_name: kan-web
+    ports:
+      - "${WEB_PORT}:3000"
+    environment:
+      - POSTGRES_URL=${POSTGRES_URL}
+      - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
+      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+      - NEXT_PUBLIC_ALLOW_CREDENTIALS=${NEXT_PUBLIC_ALLOW_CREDENTIALS}
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    networks:
+      - proxy-nw
+    restart: unless-stopped
+
+networks:
+  proxy-nw:
+    external: true
