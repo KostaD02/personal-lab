@@ -27,12 +27,16 @@ include:
   - workspace/excalidraw/docker-compose.yml
   - workspace/code-server/docker-compose.yml
   - workspace/notediscovery/docker-compose.yml
+  - workspace/kan/docker-compose.yml
 
   # Gaming
   - gaming/steam-idler/docker-compose.yml
 
   # Network
   - network/cloudflare/docker-compose.yml
+
+  # Finance
+  - finance/sure/docker-compose.yml
 
 networks:
   proxy-nw:

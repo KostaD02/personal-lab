@@ -1,0 +1,90 @@
+services:
+  sure-db:
+    image: postgres:16-alpine
+    container_name: sure-db
+    restart: unless-stopped
+    networks:
+      - proxy-nw
+    environment:
+      POSTGRES_USER: sure_user
+      POSTGRES_PASSWORD: YOUR_PASSWORD
+      POSTGRES_DB: sure_production
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - /mnt/data/docker/volumes/sure/db:/var/lib/postgresql/data
+
+  sure-redis:
+    image: redis:7-alpine
+    container_name: sure-redis
+    restart: unless-stopped
+    networks:
+      - proxy-nw
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - /mnt/data/docker/volumes/sure/redis:/data
+
+  sure-web:
+    image: ghcr.io/we-promise/sure:stable
+    container_name: sure-app
+    restart: unless-stopped
+    depends_on:
+      sure-db:
+        condition: service_healthy
+      sure-redis:
+        condition: service_healthy
+    networks:
+      - proxy-nw
+    ports:
+      - "8086:3000"
+    environment:
+      SELF_HOSTED: "true"
+      RAILS_FORCE_SSL: "false"
+      RAILS_ASSUME_SSL: "false"
+      DB_HOST: sure-db
+      DB_PORT: 5432
+      POSTGRES_USER: sure_user
+      POSTGRES_PASSWORD: YOUR_PASSWORD
+      POSTGRES_DB: sure_production
+      REDIS_URL: redis://sure-redis:6379/1
+      SECRET_KEY_BASE: YOUR_SECRET_KEY_HEX_STRING_64
+      NEXTAUTH_URL: https://finance.konstantinedatunishvili.com
+      TZ: Asia/Tbilisi
+    volumes:
+      - /mnt/data/docker/volumes/sure/storage:/rails/storage
+
+  sure-worker:
+    image: ghcr.io/we-promise/sure:stable
+    container_name: sure-worker
+    command: bundle exec sidekiq
+    restart: unless-stopped
+    depends_on:
+      sure-db:
+        condition: service_healthy
+      sure-redis:
+        condition: service_healthy
+    networks:
+      - proxy-nw
+    environment:
+      SELF_HOSTED: "true"
+      DB_HOST: sure-db
+      DB_PORT: 5432
+      POSTGRES_USER: sure_user
+      POSTGRES_PASSWORD: YOUR_PASSWORD
+      POSTGRES_DB: sure_production
+      REDIS_URL: redis://sure-redis:6379/1
+      SECRET_KEY_BASE: YOUR_SECRET_KEY_HEX_STRING_64
+      TZ: Asia/Tbilisi
+    volumes:
+      - /mnt/data/docker/volumes/sure/storage:/rails/storage
+
+networks:
+  proxy-nw:
+    external: true
