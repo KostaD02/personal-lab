@@ -1,0 +1,57 @@
+services:
+  # One-time: downloads the exercise images and GIFs (~140 MB), skipped if already present
+  opengym-media:
+    image: alpine/git
+    container_name: opengym-media
+    volumes:
+      - /mnt/data/docker/volumes/opengym/media/img:/out/img
+      - /mnt/data/docker/volumes/opengym/media/gif:/out/gif
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        if [ -z "$$(ls -A /out/img 2>/dev/null)" ]; then
+          git clone --depth 1 https://github.com/hasaneyldrm/exercises-dataset /tmp/ds
+          cp /tmp/ds/images/*.jpg /out/img/ && cp /tmp/ds/videos/*.gif /out/gif/
+        fi
+    restart: "no"
+
+  opengym-api:
+    image: ghcr.io/duartesantos8/opengym-api:latest
+    container_name: opengym-api
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - TZ=Asia/Tbilisi
+      - PORT=3000
+      - DATA_DIR=/data
+      - TRUST_PROXY=1
+    volumes:
+      - /mnt/data/docker/volumes/opengym/data:/data # users, passkeys, workouts - back this up
+    networks:
+      - proxy-nw
+
+  opengym-web:
+    image: ghcr.io/duartesantos8/opengym-web:latest
+    container_name: opengym-web
+    restart: unless-stopped
+    depends_on:
+      opengym-media:
+        condition: service_completed_successfully
+      opengym-api:
+        condition: service_started
+    ports:
+      - "${WEB_PORT:-8087}:80"
+    environment:
+      - TZ=Asia/Tbilisi
+      - BACKEND=opengym-api
+      - PORT=3000
+      - CF_CONNECTING_IP=$$http_cf_connecting_ip # behind Cloudflare tunnel; remove otherwise
+    volumes:
+      - /mnt/data/docker/volumes/opengym/media/img:/usr/share/nginx/html/img:ro
+      - /mnt/data/docker/volumes/opengym/media/gif:/usr/share/nginx/html/gif:ro
+    networks:
+      - proxy-nw
+
+networks:
+  proxy-nw:
+    external: true

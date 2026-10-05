@@ -38,6 +38,9 @@ include:
   # Finance
   - finance/sure/docker-compose.yml
 
+  # Health
+  - health/opengym/docker-compose.yml
+
 networks:
   proxy-nw:
     external: true

@@ -8,6 +8,7 @@ This directory contains the Docker Compose files for the services I use in my pe
   - [Workspace](#workspace)
   - [Utility](#utility)
   - [Tools](#tools)
+  - [Health](#health)
 
 ## Dashboard
 
@@ -32,3 +33,7 @@ This directory contains the Docker Compose files for the services I use in my pe
 ## Tools
 
 - [IT Tools](tools/it-tools/docker-compose.yml)
+
+## Health
+
+- [openGym](health/opengym/docker-compose.yml)
