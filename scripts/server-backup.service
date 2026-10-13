@@ -1,0 +1,13 @@
+[Unit]
+Description=Server backup to /var/backups/server (separate physical disk)
+Requires=docker.service
+After=docker.service
+RequiresMountsFor=/mnt/data
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/server-backup.sh
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+TimeoutStartSec=4h
